@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import axios from "axios";
+import {instance as axios} from "./config/axios.config";
 
 //ui
 import AppBar from "@material-ui/core/AppBar";
@@ -11,14 +11,10 @@ import Typography from "@material-ui/core/Typography";
 //pages
 import { Home } from "./pages/Home";
 
-axios.defaults.baseURL = process.env.NODE_ENV === 'production' && "https://api.exchangeratesapi.io";
-
-console.log('axios', axios.defaults)
-
 export function App() {
   useEffect(() => {
     axios.get("/latest").then(res => console.log("res", res));
-  });
+  },[]);
 
   return (
     <>
