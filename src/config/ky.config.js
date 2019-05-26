@@ -1,7 +1,7 @@
-import axios from "axios";
+import ky from "ky";
 
-export const instance = axios.create({
-  baseURL:
+export const instance = ky.create({
+  prefixUrl:
     process.env.NODE_ENV === "production" && "https://api.exchangeratesapi.io"
 });
 

@@ -1,41 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
-import {instance as axios} from "./config/axios.config";
+import CssBaseline from "@material-ui/core/CssBaseline";
+
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 //ui
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import { Nav } from "./components/Nav";
 
 //pages
 import { Home } from "./pages/Home";
+import { Latest } from "./pages/Latest";
+
+// utils
+import { makeStyles } from "@material-ui/core/styles";
+
+//actions
+import { getCurrencies } from "./api";
+
+const useStyles = makeStyles({
+  root: {
+    flexGrow: 1
+  }
+});
 
 export function App() {
+  const classes = useStyles();
+
   useEffect(() => {
-    axios.get("/latest").then(res => console.log("res", res));
-  },[]);
+    getCurrencies()
+  }, []);
 
   return (
     <>
-      <AppBar position="static" color="primary">
+      <CssBaseline />
+      <AppBar position="static" color="primary" className={classes.root}>
         <Toolbar>
-          <Typography variant="h6" color="inherit">
+          <Typography variant="h6" color="inherit" component="h1">
             Current currencies
           </Typography>
         </Toolbar>
       </AppBar>
-
-      <Router>
-        <Link to="/">Home</Link>
-        <Link to="/latest">Latest</Link>
-        <div style={{ padding: 15 }}>
+      <Container>
+        <Router>
+          <Nav />
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/latest" component={() => <h1>Latest</h1>} />
+            <Route path="/latest" component={Latest} />
           </Switch>
-        </div>
-      </Router>
+        </Router>
+      </Container>
     </>
   );
 }
