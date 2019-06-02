@@ -1,2 +1,2 @@
 # current-currencies-app
-current-currencies-app is test task for appbooster 
+current-currencies-app is example for [effector.js](https://github.com/zerobias/effector)
